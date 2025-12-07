@@ -1,0 +1,31 @@
+Error: Request failed with status code 524
+Stack: AxiosError: Request failed with status code 524
+    at settle (webpack-internal:///(rsc)/./node_modules/axios/lib/core/settle.js:24:12)
+    at IncomingMessage.handleStreamEnd (webpack-internal:///(rsc)/./node_modules/axios/lib/adapters/http.js:825:71)
+    at IncomingMessage.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (webpack-internal:///(rsc)/./node_modules/axios/lib/core/Axios.js:57:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async generateImagePollinations (webpack-internal:///(rsc)/./lib/image-generator.ts:72:26)
+    at async generateImage (webpack-internal:///(rsc)/./lib/image-generator.ts:99:20)
+    at async POST (webpack-internal:///(rsc)/./app/api/generate-image/route.ts:49:29)
+    at async C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:57228
+    at async eT.execute (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:46851)
+    at async eT.handle (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:58760)
+    at async doRender (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:1588:28)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:1496:28)
+    at async DevServer.renderPageComponent (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\base-server.js:818:17)
+    at async C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\SATEJ MORE\Desktop\Intellect-Protocol\Intellect-Protocol\node_modules\next\dist\server\lib\start-server.js:141:13)
+Time: 2025-12-07T15:18:34.722Z

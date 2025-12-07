@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Cyber-Industrial Light (Rarely used but defined) */
+    --background: 210 20% 98%;
+    --foreground: 220 40% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 180 100% 50%;
+    /* Cyan */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 260 100% 50%;
+    /* Electric Purple */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 90%;
+    --muted-foreground: 215 16% 40%;
+    --accent: 300 100% 50%;
+    /* Magenta */
+    --accent-foreground: 222 47% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 180 100% 50%;
+    --radius: 0px;
+    /* Sharp edges for industrial feel */
+  }
+
+  .dark {
+    /* Cyber-Industrial Dark - The Main Event */
+    --background: 240 20% 3%;
+    /* Void Black/Blue */
+    --foreground: 180 100% 90%;
+    /* Pale Cyan text */
+    --card: 240 20% 5%;
+    --card-foreground: 180 50% 80%;
+    --popover: 240 20% 5%;
+    --popover-foreground: 180 100% 90%;
+    --primary: 180 100% 50%;
+    /* Neon Cyan */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 280 100% 60%;
+    /* Neon Purple */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 180 20% 60%;
+    --accent: 320 100% 55%;
+    /* Neon Pink */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 180 50% 20%;
+    /* Dim Cyan Border */
+    --input: 240 20% 10%;
+    --ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary selection:text-white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 dark:bg-black/20 dark:border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-white/60 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/5 shadow-xl transition-all duration-300;
+  }
+
+  .glass-button {
+    @apply bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 backdrop-blur-md border border-white/20 transition-all duration-300 active:scale-95;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 animate-gradient-x;
+  }
+
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-move 5s ease infinite;
+  }
+
+  @keyframes gradient-move {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .grid-bg-light {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .grid-bg-dark {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
