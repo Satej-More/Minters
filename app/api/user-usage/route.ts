@@ -16,34 +16,49 @@ export async function GET(request: NextRequest) {
         }
 
         const generationsRef = collection(db, 'image_generations');
-        const uniqueIds = new Set<string>();
+        const allDocs: any[] = [];
 
         // Calculate timestamp for 24 hours ago
-        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const twentyFourHoursAgo = Date.now() - 24 * 60 * 60 * 1000;
 
-        // Check by wallet address if provided (last 24 hours only)
+        // Check by wallet address if provided
         if (walletAddress) {
             const qWallet = query(
                 generationsRef,
-                where('walletAddress', '==', walletAddress),
-                where('timestamp', '>=', twentyFourHoursAgo)
+                where('walletAddress', '==', walletAddress)
             );
             const snapshotWallet = await getDocs(qWallet);
-            snapshotWallet.forEach(doc => uniqueIds.add(doc.id));
+            snapshotWallet.forEach(doc => {
+                const data = doc.data();
+                const docTimestamp = new Date(data.timestamp).getTime();
+                // Only count if within last 24 hours
+                if (docTimestamp >= twentyFourHoursAgo) {
+                    allDocs.push({ id: doc.id, ...data });
+                }
+            });
         }
 
-        // Check by email if provided (last 24 hours only)
+        // Check by email if provided
         if (email) {
             const qEmail = query(
                 generationsRef,
-                where('email', '==', email),
-                where('timestamp', '>=', twentyFourHoursAgo)
+                where('email', '==', email)
             );
             const snapshotEmail = await getDocs(qEmail);
-            snapshotEmail.forEach(doc => uniqueIds.add(doc.id));
+            snapshotEmail.forEach(doc => {
+                const data = doc.data();
+                const docTimestamp = new Date(data.timestamp).getTime();
+                // Only count if within last 24 hours
+                if (docTimestamp >= twentyFourHoursAgo) {
+                    // Avoid duplicates
+                    if (!allDocs.find(d => d.id === doc.id)) {
+                        allDocs.push({ id: doc.id, ...data });
+                    }
+                }
+            });
         }
 
-        const count = uniqueIds.size;
+        const count = allDocs.length;
         const limit = 2;
         const remaining = Math.max(0, limit - count);
 
@@ -52,10 +67,19 @@ export async function GET(request: NextRequest) {
             remaining,
             limit
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error fetching user usage:', error);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        });
         return NextResponse.json(
-            { error: 'Failed to fetch usage data' },
+            {
+                error: 'Failed to fetch usage data',
+                details: error.message,
+                code: error.code
+            },
             { status: 500 }
         );
     }

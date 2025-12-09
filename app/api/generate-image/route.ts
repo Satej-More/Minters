@@ -18,32 +18,47 @@ export async function POST(request: NextRequest) {
 
         // Check usage limits (last 24 hours only)
         const generationsRef = collection(db, 'image_generations');
-        const uniqueIds = new Set<string>();
+        const allDocs: any[] = [];
 
         // Calculate timestamp for 24 hours ago
-        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const twentyFourHoursAgo = Date.now() - 24 * 60 * 60 * 1000;
 
-        // Check by wallet address (last 24 hours)
+        // Check by wallet address
         const qWallet = query(
             generationsRef,
-            where('walletAddress', '==', walletAddress),
-            where('timestamp', '>=', twentyFourHoursAgo)
+            where('walletAddress', '==', walletAddress)
         );
         const snapshotWallet = await getDocs(qWallet);
-        snapshotWallet.forEach(doc => uniqueIds.add(doc.id));
+        snapshotWallet.forEach(doc => {
+            const data = doc.data();
+            const docTimestamp = new Date(data.timestamp).getTime();
+            // Only count if within last 24 hours
+            if (docTimestamp >= twentyFourHoursAgo) {
+                allDocs.push({ id: doc.id, ...data });
+            }
+        });
 
-        // Check by email if provided (last 24 hours)
+        // Check by email if provided
         if (email) {
             const qEmail = query(
                 generationsRef,
-                where('email', '==', email),
-                where('timestamp', '>=', twentyFourHoursAgo)
+                where('email', '==', email)
             );
             const snapshotEmail = await getDocs(qEmail);
-            snapshotEmail.forEach(doc => uniqueIds.add(doc.id));
+            snapshotEmail.forEach(doc => {
+                const data = doc.data();
+                const docTimestamp = new Date(data.timestamp).getTime();
+                // Only count if within last 24 hours
+                if (docTimestamp >= twentyFourHoursAgo) {
+                    // Avoid duplicates
+                    if (!allDocs.find(d => d.id === doc.id)) {
+                        allDocs.push({ id: doc.id, ...data });
+                    }
+                }
+            });
         }
 
-        if (uniqueIds.size >= 2) {
+        if (allDocs.length >= 2) {
             return NextResponse.json(
                 { error: 'Limit reached. You can only generate 2 images.' },
                 { status: 403 }
