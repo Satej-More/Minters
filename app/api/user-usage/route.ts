@@ -4,6 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 
 // Force dynamic rendering (required for searchParams)
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
     try {

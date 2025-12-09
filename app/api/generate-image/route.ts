@@ -6,6 +6,7 @@ import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
     console.log('[API] /api/generate-image hit');
