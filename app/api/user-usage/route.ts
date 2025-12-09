@@ -18,16 +18,27 @@ export async function GET(request: NextRequest) {
         const generationsRef = collection(db, 'image_generations');
         const uniqueIds = new Set<string>();
 
-        // Check by wallet address if provided
+        // Calculate timestamp for 24 hours ago
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+        // Check by wallet address if provided (last 24 hours only)
         if (walletAddress) {
-            const qWallet = query(generationsRef, where('walletAddress', '==', walletAddress));
+            const qWallet = query(
+                generationsRef,
+                where('walletAddress', '==', walletAddress),
+                where('timestamp', '>=', twentyFourHoursAgo)
+            );
             const snapshotWallet = await getDocs(qWallet);
             snapshotWallet.forEach(doc => uniqueIds.add(doc.id));
         }
 
-        // Check by email if provided
+        // Check by email if provided (last 24 hours only)
         if (email) {
-            const qEmail = query(generationsRef, where('email', '==', email));
+            const qEmail = query(
+                generationsRef,
+                where('email', '==', email),
+                where('timestamp', '>=', twentyFourHoursAgo)
+            );
             const snapshotEmail = await getDocs(qEmail);
             snapshotEmail.forEach(doc => uniqueIds.add(doc.id));
         }
