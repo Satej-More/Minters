@@ -4,6 +4,9 @@ import sharp from 'sharp';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
     console.log('[API] /api/generate-image hit');
     try {
